@@ -28,7 +28,7 @@ class AutoScaler:
             print("No requests received.")
             return
         print("Received an average response time of " + str(response_time))
-        replicas = ceil(self.current_replicas * (response_time / self.desired_response_time))
+        replicas = int(ceil(self.current_replicas * (response_time / self.desired_response_time)))
         if 1 < replicas < 25:
             self.set_current_replicas(replicas)
             print("Scaling to " + str(self.current_replicas))
