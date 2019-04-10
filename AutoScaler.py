@@ -9,6 +9,7 @@ class AutoScaler:
         self.scalerService = ScalerHttpService()
         self.current_replicas = 1
         self.desired_response_time = 2000000
+        os.system(self.build_scale_command())
 
     def get_current_replicas(self):
         return self.current_replicas
@@ -29,10 +30,10 @@ class AutoScaler:
             return
         print("Received an average response time of " + str(response_time))
         replicas = int(ceil(self.current_replicas * (response_time / self.desired_response_time)))
-        if 1 < replicas < 25:
+        if 1 < replicas < 25 and replicas != self.current_replicas:
             self.set_current_replicas(replicas)
             print("Scaling to " + str(self.current_replicas))
-            # os.system(self.build_scale_command())
+            os.system(self.build_scale_command())
 
 
 scaler = AutoScaler()
