@@ -17,8 +17,3 @@ class ScalerHttpService:
                              body={"query": {"range": {"@timestamp": {"gte": duration}}},
                                    "aggs": {"avg_response_time": {"avg": {"field": "transaction.duration.us"}}}})
         self.response_time = res["aggregations"]["avg_response_time"]["value"]
-
-
-scaler = ScalerHttpService()
-scaler.update_response_time("now-20h")
-print(scaler.get_response_time())
